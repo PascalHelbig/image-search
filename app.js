@@ -20,7 +20,7 @@ app.get('/imagesearch/:search', function (req, res) {
     }
   }, function (error, response, body) {
     if (!error && response.statusCode === 200) {
-      var result = body.data.map(function(image) {
+      var result = body.data.map(function (image) {
         return {
           url: image.link,
           type: image.type,
