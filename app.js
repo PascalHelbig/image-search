@@ -5,6 +5,8 @@ var request = require('request');
 var app = express();
 dotenv.load();
 
+var latestSearch = [];
+
 app.get('/', function (req, res) {
   res.send('Hello World');
 });
@@ -28,10 +30,17 @@ app.get('/imagesearch/:search', function (req, res) {
         };
       }).slice(0, offset);
       res.json(result);
+
+      latestSearch.unshift({term: req.params.search, when: new Date().toString()});
+      latestSearch = latestSearch.slice(0, 10);
     } else {
       res.json({error: error, status: response.statusCode});
     }
   });
+});
+
+app.get('/latest/imagesearch', function (req, res) {
+  res.json(latestSearch);
 });
 
 app.listen(8080, function () {
