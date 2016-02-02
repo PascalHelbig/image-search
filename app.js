@@ -10,6 +10,7 @@ app.get('/', function (req, res) {
 });
 
 app.get('/imagesearch/:search', function (req, res) {
+  var offset = req.query.offset || -1;
   var url = "https://api.imgur.com/3/gallery/search/top?q=" + req.params.search;
   request({
     url: url,
@@ -25,7 +26,7 @@ app.get('/imagesearch/:search', function (req, res) {
           type: image.type,
           title: image.title
         };
-      });
+      }).slice(0, offset);
       res.json(result);
     } else {
       res.json({error: error, status: response.statusCode});
