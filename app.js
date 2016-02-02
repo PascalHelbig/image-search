@@ -1,5 +1,8 @@
 var express = require('express');
+var dotenv = require('dotenv');
+
 var app = express();
+dotenv.load();
 
 app.get('/', function (req, res) {
   res.send('Hello World');
